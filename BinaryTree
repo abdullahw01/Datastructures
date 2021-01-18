@@ -1,0 +1,67 @@
+//Abdullah Waheed
+//C++ code for Binary tree
+
+#include<iostream>
+using namespace std;
+struct node
+{
+  int data;
+  struct node *left;
+  struct node *right;
+};
+struct node *
+createNode (int val)
+{
+  struct node *temp = (struct node *) malloc (sizeof (struct node));
+  temp->data = val;
+  temp->left = temp->right = NULL;
+  return temp;
+}
+
+struct node *
+findValue (struct node *root, int val)
+{
+// Base Cases: root is null or val is present at root
+  if (root == NULL || root->data == val)
+    return root;
+
+// Key is greater than root's val
+  if (root->data < val)
+    return findValue (root->right, val);
+
+// Key is smaller than root's val
+  return findValue (root->left, val);
+}
+
+struct node *
+insertNode (struct node *node, int val)
+{
+  if (node == NULL)
+    return createNode (val);
+  if (val < node->data)
+    node->left = insertNode (node->left, val);
+  else if (val > node->data)
+    node->right = insertNode (node->right, val);
+  return node;
+}
+
+int
+main ()
+{
+  struct node *root = NULL;
+  root = insertNode (root, 4);
+  insertNode (root, 9);
+  insertNode (root, 8);
+  insertNode (root, 2);
+  insertNode (root, 1);
+  insertNode (root, 3);
+
+  int val;
+  cout << "Enter value to search: ";
+  cin >> val;
+  if (findValue (root, val))	//if given key found then return that node.
+    cout << "Given number is found" << endl;
+  else				//if given key is not found.
+    cout << "Given number is not found" << endl;
+  return 0;
+}
